@@ -1,7 +1,10 @@
 import datetime
 
 from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
 from django.utils.translation import ugettext as _
+
+import re
 
 
 phone_number_validator = RegexValidator(re.compile(r"^\+?\d[-\d\s]{7,13}$"), message=_("Invalid Phone Number"))
