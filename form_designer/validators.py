@@ -81,7 +81,7 @@ def eik_validator(eik):
         return digits[-1] == checksum % 10
 
     try:
-        eik = map(int, eik)
+        eik = list(map(int, eik))
     except ValueError:
         raise ValidationError(error_message)
 
