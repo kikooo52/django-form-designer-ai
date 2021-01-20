@@ -4,6 +4,9 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 
 
+phone_number_validator = RegexValidator(re.compile(r"^\+?\d[-\d\s]{7,13}$"), message=_("Invalid Phone Number"))
+
+
 class EGN(str):
     """
     Object representing Bulgarian unique citizenship number (EGN)

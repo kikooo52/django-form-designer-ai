@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='formdefinitionfield',
             name='validators',
-            field=models.IntegerField(blank=True, choices=[(0, 'EGN'), (1, 'EIK/BULSTAT')], null=True, verbose_name='Validators'),
+            field=models.IntegerField(blank=True, choices=[(0, 'EGN'), (1, 'EIK/BULSTAT'), (2, 'Phone Number')], null=True, verbose_name='Validators'),
         ),
     ]

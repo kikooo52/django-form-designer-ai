@@ -18,7 +18,7 @@ from form_designer.fields import ModelNameField, RegexpExpressionField, Template
 from form_designer.utils import get_random_hash, string_template_replace
 from picklefield.fields import PickledObjectField
 
-from .validators import egn_validator, eik_validator
+from .validators import egn_validator, eik_validator, phone_number_validator
 try:
     from django.urls import reverse
 except ImportError:
@@ -215,6 +215,7 @@ class FormDefinitionField(models.Model):
     VALIDATOR_CHOICES = (
         (0, _('EGN')),
         (1, _('EIK/BULSTAT')),
+        (2, _('Phone Number')),
     )
 
     form_definition = models.ForeignKey(FormDefinition, on_delete=models.CASCADE)
@@ -297,7 +298,11 @@ class FormDefinitionField(models.Model):
             elif self.validators == 1:
                 args.update({
                     'validators': [eik_validator],
-                })                    
+                })
+            elif self.validators == 2:
+                args.update({
+                    'validators': [phone_number_validator],
+                })                  
 
         if self.field_class in ('django.forms.ChoiceField', 'django.forms.MultipleChoiceField'):
             if self.choice_values:
