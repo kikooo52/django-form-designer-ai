@@ -18,7 +18,6 @@ from form_designer.fields import ModelNameField, RegexpExpressionField, Template
 from form_designer.utils import get_random_hash, string_template_replace
 from picklefield.fields import PickledObjectField
 
-from .validators import egn_validator, eik_validator, phone_number_validator
 try:
     from django.urls import reverse
 except ImportError:
@@ -212,16 +211,9 @@ class FormDefinition(models.Model):
 
 @python_2_unicode_compatible
 class FormDefinitionField(models.Model):
-    VALIDATOR_CHOICES = (
-        (0, _('EGN')),
-        (1, _('EIK/BULSTAT')),
-        (2, _('Phone Number')),
-    )
-
     form_definition = models.ForeignKey(FormDefinition, on_delete=models.CASCADE)
     field_class = models.CharField(_('field class'), max_length=100)
     position = models.IntegerField(_('position'), blank=True, null=True)
-    validators = models.IntegerField(_('Validators'), choices=VALIDATOR_CHOICES, blank=True, null=True)
 
     name = models.SlugField(_('name'), max_length=255)
     label = models.CharField(_('label'), max_length=255, blank=True, null=True)
@@ -289,20 +281,6 @@ class FormDefinitionField(models.Model):
                 args.update({
                     'regex': self.regex
                 })
-
-        if self.field_class == 'django.forms.CharField':
-            if self.validators == 0:
-                args.update({
-                    'validators': [egn_validator],
-                })
-            elif self.validators == 1:
-                args.update({
-                    'validators': [eik_validator],
-                })
-            elif self.validators == 2:
-                args.update({
-                    'validators': [phone_number_validator],
-                })                  
 
         if self.field_class in ('django.forms.ChoiceField', 'django.forms.MultipleChoiceField'):
             if self.choice_values:

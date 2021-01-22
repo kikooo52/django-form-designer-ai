@@ -21,7 +21,7 @@ class FormDefinitionFieldInline(admin.StackedInline):
     model = FormDefinitionField
     extra = 1
     fieldsets = [
-        (_('Basic'), {'fields': ['name', 'field_class', 'required', 'validators', 'initial']}),
+        (_('Basic'), {'fields': ['name', 'field_class', 'required', 'initial']}),
         (_('Display'), {'fields': ['label', 'widget', 'help_text', 'position', 'include_result']}),
         (_('Text'), {'fields': ['max_length', 'min_length']}),
         (_('Numbers'), {'fields': ['max_value', 'min_value', 'max_digits', 'decimal_places']}),
